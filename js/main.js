@@ -271,6 +271,7 @@ function initCarousel() {
 }
 
 function initActiveNavLink() {
+  const MOBILE_BREAKPOINT = 768;
   const navSections = [
     { id: 'services' },
     { id: 'references' },
@@ -282,6 +283,16 @@ function initActiveNavLink() {
   if (!navLinks.length) return;
 
   function getActivationLine() {
+    if (
+      window.innerWidth <= MOBILE_BREAKPOINT &&
+      document.body.classList.contains('mobile-nav--hero-hidden')
+    ) {
+      const toggleBtn = document.querySelector('.mobile-nav-toggle__btn');
+      if (toggleBtn) {
+        return toggleBtn.getBoundingClientRect().bottom + 8;
+      }
+    }
+
     const navbar = document.querySelector('.navbar');
     if (!navbar) return 96;
     return navbar.getBoundingClientRect().bottom + 8;
@@ -329,10 +340,130 @@ function initActiveNavLink() {
   updateActiveNav();
 }
 
+function initMobileNav() {
+  const MOBILE_BREAKPOINT = 768;
+  const hero = document.querySelector('.hero');
+  const toggle = document.querySelector('.mobile-nav-toggle');
+  const toggleBtn = document.querySelector('.mobile-nav-toggle__btn');
+  const panel = document.querySelector('.mobile-nav-panel');
+
+  if (!hero || !toggle || !toggleBtn || !panel) return;
+
+  let menuOpen = false;
+  let scrollTicking = false;
+
+  function isMobileViewport() {
+    return window.innerWidth <= MOBILE_BREAKPOINT;
+  }
+
+  function isHeroVisible() {
+    return hero.getBoundingClientRect().bottom > 8;
+  }
+
+  function closeMenu() {
+    if (!menuOpen) return;
+
+    menuOpen = false;
+    panel.classList.remove('is-open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+
+    const onCloseEnd = (e) => {
+      if (e.propertyName !== 'opacity') return;
+      panel.removeEventListener('transitionend', onCloseEnd);
+      if (!menuOpen) {
+        panel.hidden = true;
+      }
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      panel.hidden = true;
+      return;
+    }
+
+    panel.addEventListener('transitionend', onCloseEnd);
+    window.setTimeout(() => {
+      if (!menuOpen && !panel.classList.contains('is-open')) {
+        panel.hidden = true;
+      }
+    }, 280);
+  }
+
+  function openMenu() {
+    menuOpen = true;
+    panel.hidden = false;
+    toggleBtn.setAttribute('aria-expanded', 'true');
+
+    requestAnimationFrame(() => {
+      panel.classList.add('is-open');
+    });
+  }
+
+  function updateMobileNavState() {
+    if (!isMobileViewport()) {
+      document.body.classList.remove('mobile-nav--hero-visible', 'mobile-nav--hero-hidden');
+      closeMenu();
+      return;
+    }
+
+    if (isHeroVisible()) {
+      document.body.classList.add('mobile-nav--hero-visible');
+      document.body.classList.remove('mobile-nav--hero-hidden');
+      closeMenu();
+    } else {
+      document.body.classList.remove('mobile-nav--hero-visible');
+      document.body.classList.add('mobile-nav--hero-hidden');
+    }
+  }
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (menuOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  panel.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  document.addEventListener('click', () => {
+    closeMenu();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeMenu();
+    }
+  });
+
+  panel.querySelectorAll('.navbar__link').forEach((link) => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  function onScrollOrResize() {
+    if (!scrollTicking) {
+      requestAnimationFrame(() => {
+        updateMobileNavState();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize, { passive: true });
+  updateMobileNavState();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initCarousel();
   initLightbox();
   initActiveNavLink();
+  initMobileNav();
   initLanguageSwitcher();
 });
