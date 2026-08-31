@@ -6,7 +6,7 @@
   <meta name="description" content="Rakennus- ja kiinteistöhuoltoa ammattitaidolla. Kattomaalaus, pihatyöt, korjaustyöt ja ylläpito.">
   <title>Eetu Lamberg — Tmi</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20260901-1">
 </head>
 <body>
 
@@ -109,11 +109,6 @@
         <h2 class="section__heading" data-i18n="references.heading">Referenssit</h2>
         <div class="carousel" aria-roledescription="carousel">
           <div class="carousel__viewport">
-            <button type="button" class="carousel__arrow carousel__arrow--prev" aria-label="Edellinen">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M15 18l-6-6 6-6"/>
-              </svg>
-            </button>
             <div class="carousel__track-wrapper">
               <div class="carousel__track">
                 <figure class="carousel__slide" data-caption-key="references.caption.1">
@@ -136,14 +131,21 @@
                 </figure>
               </div>
             </div>
+          </div>
+          <p class="carousel__caption" data-i18n="references.caption.1">Kattomaalaus</p>
+          <div class="carousel__controls">
+            <button type="button" class="carousel__arrow carousel__arrow--prev" aria-label="Edellinen">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </button>
+            <div class="carousel__dots" role="tablist" aria-label="Referenssit"></div>
             <button type="button" class="carousel__arrow carousel__arrow--next" aria-label="Seuraava">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M9 18l6-6-6-6"/>
               </svg>
             </button>
           </div>
-          <p class="carousel__caption" data-i18n="references.caption.1">Kattomaalaus</p>
-          <div class="carousel__dots" role="tablist" aria-label="Referenssit"></div>
         </div>
       </div>
     </section>
@@ -215,6 +217,6 @@
   </div>
 
   <script src="js/content.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20260901-1"></script>
 </body>
 </html>

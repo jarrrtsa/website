@@ -91,6 +91,7 @@ function initLightbox() {
   }
 
   trackWrapper.addEventListener('click', (e) => {
+    if (trackWrapper.dataset.suppressClick === 'true') return;
     const img = e.target.closest('.carousel__slide.is-active img');
     if (!img) return;
     openLightbox(img.currentSrc || img.src);
@@ -122,12 +123,17 @@ function initCarousel() {
 
   const firstClone = originalSlides[0].cloneNode(true);
   const lastClone = originalSlides[slideCount - 1].cloneNode(true);
+  firstClone.setAttribute('aria-hidden', 'true');
+  lastClone.setAttribute('aria-hidden', 'true');
   track.insertBefore(lastClone, originalSlides[0]);
   track.appendChild(firstClone);
 
   const allSlides = [...track.querySelectorAll('.carousel__slide')];
   let currentIndex = 1;
   let isAnimating = false;
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
   originalSlides.forEach((_, i) => {
     const dot = document.createElement('button');
@@ -135,12 +141,12 @@ function initCarousel() {
     dot.className = 'carousel__dot';
     dot.setAttribute('role', 'tab');
     dot.setAttribute('aria-label', `Referenssi ${i + 1}`);
-    dot.addEventListener('click', () => goTo(i + 1));
+    dot.addEventListener('click', () => goToRealIndex(i));
     dotsContainer.appendChild(dot);
   });
 
   const dots = [...dotsContainer.querySelectorAll('.carousel__dot')];
-  const slideWidthRatio = () => (window.innerWidth <= 768 ? 0.84 : 0.72);
+  const slideWidthRatio = () => (window.innerWidth <= 768 ? 0.91 : 0.72);
 
   function setSlideWidths() {
     const slideWidth = trackWrapper.clientWidth * slideWidthRatio();
@@ -169,11 +175,12 @@ function initCarousel() {
   }
 
   function updateUI(index) {
+    const realIndex = getRealIndex(index);
+
     allSlides.forEach((slide, i) => {
       slide.classList.toggle('is-active', i === index);
     });
 
-    const realIndex = getRealIndex(index);
     dots.forEach((dot, i) => {
       const isActive = i === realIndex;
       dot.classList.toggle('is-active', isActive);
@@ -190,9 +197,10 @@ function initCarousel() {
     );
   }
 
-  function restoreTransitions(onRestored) {
+  function finishBoundaryReset(onRestored) {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        carousel.classList.remove('is-resetting');
         track.classList.remove('carousel__track--no-transition');
         if (onRestored) onRestored();
       });
@@ -203,7 +211,7 @@ function initCarousel() {
     track.classList.add('carousel__track--no-transition');
     track.style.transform = `translateX(${getOffset(index)}px)`;
     void track.offsetHeight;
-    restoreTransitions(onRestored);
+    finishBoundaryReset(onRestored);
   }
 
   function setTransform(index, animate = true) {
@@ -214,23 +222,44 @@ function initCarousel() {
   }
 
   function jumpToIndex(index) {
+    isAnimating = true;
+    carousel.classList.add('is-resetting');
+    track.classList.add('carousel__track--no-transition');
     currentIndex = index;
+    track.style.transform = `translateX(${getOffset(index)}px)`;
     updateUI(currentIndex);
-    applyTransformInstant(index, () => {
+    void track.offsetHeight;
+    finishBoundaryReset(() => {
       isAnimating = false;
     });
   }
 
   function goTo(index, animate = true) {
-    if (animate && isAnimating) return;
+    if (isAnimating) return;
+    if (prefersReducedMotion) animate = false;
+
+    if (!animate) {
+      let targetIndex = index;
+      if (targetIndex <= 0) targetIndex = slideCount;
+      if (targetIndex >= slideCount + 1) targetIndex = 1;
+      currentIndex = targetIndex;
+      updateUI(currentIndex);
+      applyTransformInstant(currentIndex);
+      return;
+    }
 
     currentIndex = index;
     updateUI(currentIndex);
-    setTransform(currentIndex, animate);
+    setTransform(currentIndex, true);
+    isAnimating = true;
+  }
 
-    if (animate) {
-      isAnimating = true;
-    }
+  function goToRealIndex(realIndex) {
+    goTo(realIndex + 1);
+  }
+
+  function step(direction) {
+    goTo(currentIndex + direction);
   }
 
   track.addEventListener('transitionend', (e) => {
@@ -238,15 +267,80 @@ function initCarousel() {
 
     if (currentIndex === 0) {
       jumpToIndex(slideCount);
-    } else if (currentIndex === slideCount + 1) {
-      jumpToIndex(1);
-    } else {
-      isAnimating = false;
+      return;
     }
+
+    if (currentIndex === slideCount + 1) {
+      jumpToIndex(1);
+      return;
+    }
+
+    isAnimating = false;
   });
 
-  prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
-  nextBtn.addEventListener('click', () => goTo(currentIndex + 1));
+  prevBtn.addEventListener('click', () => step(-1));
+  nextBtn.addEventListener('click', () => step(1));
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchTracking = false;
+  let touchMoved = false;
+  const SWIPE_THRESHOLD = 48;
+  const SWIPE_DIRECTION_RATIO = 1.2;
+
+  trackWrapper.addEventListener(
+    'touchstart',
+    (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchTracking = true;
+      touchMoved = false;
+    },
+    { passive: true }
+  );
+
+  trackWrapper.addEventListener(
+    'touchmove',
+    (e) => {
+      if (!touchTracking || e.touches.length !== 1) return;
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      if (dx > 8 || dy > 8) {
+        touchMoved = true;
+      }
+    },
+    { passive: true }
+  );
+
+  trackWrapper.addEventListener(
+    'touchend',
+    (e) => {
+      if (!touchTracking) return;
+      touchTracking = false;
+
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+
+      if (!touchMoved || absDx < SWIPE_THRESHOLD || absDx < absDy * SWIPE_DIRECTION_RATIO) {
+        return;
+      }
+
+      trackWrapper.dataset.suppressClick = 'true';
+      window.setTimeout(() => {
+        delete trackWrapper.dataset.suppressClick;
+      }, 320);
+
+      if (dx < 0) {
+        step(1);
+      } else {
+        step(-1);
+      }
+    },
+    { passive: true }
+  );
 
   function initPosition() {
     setSlideWidths();
