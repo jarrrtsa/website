@@ -6,7 +6,7 @@
   <meta name="description" content="Rakennus- ja kiinteistöhuoltoa ammattitaidolla. Kattomaalaus, pihatyöt, korjaustyöt ja ylläpito.">
   <title>Eetu Lamberg — Tmi</title>
   <link rel="icon" href="images/logo/favicon-el.svg?v=20260915-4" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=20260915-4">
+  <link rel="stylesheet" href="css/styles.css?v=20260915-5">
 </head>
 <body>
 
@@ -173,13 +173,58 @@
   </footer>
 
   <div class="feature-modal" id="jetski-modal" hidden aria-hidden="true" role="dialog" aria-labelledby="jetski-modal-title">
-    <div class="feature-modal__inner">
-      <div class="feature-modal__media"></div>
-      <div class="feature-modal__body">
-        <h2 class="feature-modal__title" id="jetski-modal-title" data-i18n="other.jetski">Vesijettivuokraus</h2>
-        <p class="feature-modal__text" data-i18n="other.jetski.desc">Haluatko vuokrata vesijetin kesällä? Ota yhteyttä ja kysy saatavuus ja hinta.</p>
-        <img class="feature-modal__image" src="images/jetti/jetti2.jpg" alt="" loading="lazy" width="800" height="600">
-        <a class="feature-modal__cta" href="#contact" data-i18n="other.jetski.cta">Ota yhteyttä</a>
+    <button type="button" class="feature-modal__close" aria-label="Sulje">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <div class="feature-modal__scroll">
+      <div class="feature-modal__lead">
+        <div class="feature-modal__video-wrap">
+          <video class="feature-modal__video" muted playsinline preload="none" data-src="media/videot/jetti/jetti_video.mp4?v=20260915-5"></video>
+          <div class="feature-modal__video-ended" hidden>
+            <button type="button" class="feature-modal__video-replay" aria-label="Toista video">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <path d="M1 4v6h6M23 20v-6h-6"/>
+                <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/>
+              </svg>
+            </button>
+          </div>
+          <div class="feature-modal__video-footer">
+            <span class="feature-modal__scroll-hint" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="feature-modal__intro">
+          <h2 class="feature-modal__title" id="jetski-modal-title" data-i18n="other.jetski">Vesijettivuokraus</h2>
+          <p class="feature-modal__text" data-i18n="other.jetski.desc">Haluatko vuokrata vesijetin kesällä? Ota yhteyttä ja kysy saatavuus ja hinta.</p>
+          <button type="button" class="feature-modal__cta" data-i18n="other.jetski.cta">Ota yhteyttä</button>
+        </div>
+      </div>
+      <div class="feature-modal__gallery">
+        <div class="feature-modal__gallery-stage">
+          <img class="feature-modal__gallery-image is-active" src="images/jetti/jetti1.jpg" alt="" loading="lazy" width="800" height="600">
+          <img class="feature-modal__gallery-image" src="images/jetti/jetti2.jpg" alt="" loading="lazy" width="800" height="600">
+        </div>
+        <div class="feature-modal__gallery-controls">
+          <button type="button" class="feature-modal__gallery-arrow feature-modal__gallery-arrow--prev" aria-label="Edellinen kuva">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </button>
+          <div class="feature-modal__gallery-dots" role="tablist" aria-label="Jet ski -kuvat">
+            <button type="button" class="feature-modal__gallery-dot is-active" role="tab" aria-label="Kuva 1" aria-selected="true"></button>
+            <button type="button" class="feature-modal__gallery-dot" role="tab" aria-label="Kuva 2" aria-selected="false"></button>
+          </div>
+          <button type="button" class="feature-modal__gallery-arrow feature-modal__gallery-arrow--next" aria-label="Seuraava kuva">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -205,8 +250,8 @@
     </div>
   </div>
 
-  <script src="js/content.js?v=20260915-4"></script>
-  <script src="js/references.js?v=20260915-4"></script>
-  <script src="js/main.js?v=20260915-4"></script>
+  <script src="js/content.js?v=20260915-5"></script>
+  <script src="js/references.js?v=20260915-5"></script>
+  <script src="js/main.js?v=20260915-5"></script>
 </body>
 </html>
