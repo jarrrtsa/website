@@ -24,6 +24,9 @@ const content = {
 
     'other.heading': 'Muut palvelut',
     'other.jetski': 'Vesijettivuokraus',
+    'other.jetski.desc':
+      'Haluatko vuokrata vesijetin kesällä? Ota yhteyttä ja kysy saatavuus ja hinta.',
+    'other.jetski.cta': 'Ota yhteyttä',
 
     'contact.heading': 'Yhteystiedot',
     'contact.phone.label': 'Puhelin',
@@ -60,6 +63,9 @@ const content = {
 
     'other.heading': 'Other Services',
     'other.jetski': 'Jet ski rental',
+    'other.jetski.desc':
+      'Want to rent a jet ski this summer? Get in touch to ask about availability and pricing.',
+    'other.jetski.cta': 'Get in touch',
 
     'contact.heading': 'Contact',
     'contact.phone.label': 'Phone',
@@ -96,6 +102,9 @@ const content = {
 
     'other.heading': 'Övriga tjänster',
     'other.jetski': 'Vattenskoteruthyrning',
+    'other.jetski.desc':
+      'Vill du hyra en vattenskoter i sommar? Kontakta oss och fråga om tillgänglighet och pris.',
+    'other.jetski.cta': 'Kontakta oss',
 
     'contact.heading': 'Kontakt',
     'contact.phone.label': 'Telefon',

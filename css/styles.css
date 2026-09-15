@@ -217,21 +217,12 @@ ul {
   user-select: none;
 }
 
-.hero__name {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 300;
-  color: var(--text-on-dark);
-  letter-spacing: 0.04em;
-  line-height: 1.15;
-}
-
-.hero__subtitle {
-  font-size: 1.125rem;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.75);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-top: var(--space-xs);
+.hero__logo {
+  display: block;
+  width: clamp(16.5rem, 49vw, 32rem);
+  height: auto;
+  max-width: 100%;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
 }
 
 /* --- Navbar --- */
@@ -634,6 +625,26 @@ body.album-lightbox-open {
   overflow: hidden;
 }
 
+.other-card--button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.other-card--button:hover {
+  border-color: var(--border-medium);
+  background-color: var(--bg-elevated);
+}
+
+.other-card--button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .other-card__image img {
   display: block;
   width: 100%;
@@ -642,10 +653,110 @@ body.album-lightbox-open {
 }
 
 .other-card__title {
+  display: block;
   padding: var(--space-md) var(--space-lg);
   font-size: 0.9375rem;
   font-weight: 500;
   color: var(--text-muted);
+}
+
+/* --- Feature modal --- */
+.feature-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  background: rgba(12, 12, 12, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overscroll-behavior: contain;
+}
+
+.feature-modal[hidden] {
+  display: none;
+}
+
+html.feature-modal-open,
+body.feature-modal-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+@supports not (backdrop-filter: blur(10px)) {
+  .feature-modal {
+    background: rgba(12, 12, 12, 0.92);
+  }
+}
+
+.feature-modal__inner {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 560px);
+  max-height: calc(100dvh - 2 * var(--space-md));
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+}
+
+.feature-modal__media:empty {
+  display: none;
+}
+
+.feature-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+}
+
+.feature-modal__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-heading);
+  line-height: 1.3;
+}
+
+.feature-modal__text {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.feature-modal__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.feature-modal__cta {
+  align-self: flex-start;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #1a1408;
+  text-decoration: none;
+  background-color: var(--accent);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-pill);
+  transition: background-color 0.2s ease;
+}
+
+.feature-modal__cta:hover {
+  background-color: var(--accent-hover);
+}
+
+.feature-modal__cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* --- Contact --- */
@@ -753,7 +864,7 @@ a.contact-block__value:hover {
   .navbar__shell {
     flex-direction: column;
     align-items: center;
-    gap: 0.625rem;
+    gap: 1.25rem;
     width: min(100%, 19.5rem);
     padding: 0;
     background: none;
@@ -1013,8 +1124,17 @@ a.contact-block__value:hover {
   }
 
   .hero__content {
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
     padding: var(--space-xl) var(--space-lg);
-    padding-bottom: calc(var(--space-xl) + 1rem);
+    padding-bottom: calc(var(--space-xl) + 1.25rem);
+  }
+
+  .hero__logo {
+    width: clamp(12.5rem, 76vw, 18rem);
+    max-width: calc(100% - var(--space-md));
   }
 
   .lang-switcher {

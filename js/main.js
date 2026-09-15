@@ -258,9 +258,56 @@ function initMobileNav() {
   updateMobileNavState();
 }
 
+function initFeatureModals() {
+  document.querySelectorAll('[data-feature-modal]').forEach((trigger) => {
+    const modalId = trigger.getAttribute('data-feature-modal');
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    const inner = modal.querySelector('.feature-modal__inner');
+
+    function openModal() {
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('feature-modal-open');
+      document.body.classList.add('feature-modal-open');
+    }
+
+    function closeModal() {
+      modal.hidden = true;
+      modal.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('feature-modal-open');
+      document.body.classList.remove('feature-modal-open');
+    }
+
+    trigger.addEventListener('click', openModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    inner?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    modal.querySelector('.feature-modal__cta')?.addEventListener('click', () => {
+      closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) {
+        closeModal();
+      }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initReferenceAlbums();
+  initFeatureModals();
   initActiveNavLink();
   initMobileNav();
   initLanguageSwitcher();

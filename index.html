@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Rakennus- ja kiinteistöhuoltoa ammattitaidolla. Kattomaalaus, pihatyöt, korjaustyöt ja ylläpito.">
   <title>Eetu Lamberg — Tmi</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css?v=20260915-3">
+  <link rel="icon" href="images/logo/favicon-el.svg?v=20260915-4" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css?v=20260915-4">
 </head>
 <body>
 
@@ -27,8 +27,13 @@
       <button type="button" class="lang-switcher__btn" data-lang="sv" aria-pressed="false">SV</button>
     </div>
     <div class="hero__content">
-      <h1 class="hero__name">Eetu Lamberg</h1>
-      <p class="hero__subtitle">Tmi</p>
+      <img
+        class="hero__logo"
+        src="images/logo/logo-full.svg"
+        alt="Eetu Lamberg Tmi"
+        width="1022"
+        height="281"
+      >
     </div>
   </header>
 
@@ -120,12 +125,12 @@
       <div class="container">
         <h2 class="section__heading section__heading--small" data-i18n="other.heading">Muut palvelut</h2>
         <div class="other-cards">
-          <article class="other-card">
+          <button type="button" class="other-card other-card--button" data-feature-modal="jetski-modal" aria-haspopup="dialog">
             <div class="other-card__image">
-              <img src="images/vesijettivuokraus.jpg" alt="" loading="lazy" width="800" height="600">
+              <img src="images/jetti/jetti1.jpg" alt="" loading="lazy" width="800" height="600">
             </div>
-            <h3 class="other-card__title" data-i18n="other.jetski">Vesijettivuokraus</h3>
-          </article>
+            <span class="other-card__title" data-i18n="other.jetski">Vesijettivuokraus</span>
+          </button>
         </div>
       </div>
     </section>
@@ -167,6 +172,18 @@
     </div>
   </footer>
 
+  <div class="feature-modal" id="jetski-modal" hidden aria-hidden="true" role="dialog" aria-labelledby="jetski-modal-title">
+    <div class="feature-modal__inner">
+      <div class="feature-modal__media"></div>
+      <div class="feature-modal__body">
+        <h2 class="feature-modal__title" id="jetski-modal-title" data-i18n="other.jetski">Vesijettivuokraus</h2>
+        <p class="feature-modal__text" data-i18n="other.jetski.desc">Haluatko vuokrata vesijetin kesällä? Ota yhteyttä ja kysy saatavuus ja hinta.</p>
+        <img class="feature-modal__image" src="images/jetti/jetti2.jpg" alt="" loading="lazy" width="800" height="600">
+        <a class="feature-modal__cta" href="#contact" data-i18n="other.jetski.cta">Ota yhteyttä</a>
+      </div>
+    </div>
+  </div>
+
   <div class="album-lightbox" hidden aria-hidden="true">
     <div class="album-lightbox__inner">
       <div class="album-lightbox__stage">
@@ -188,8 +205,8 @@
     </div>
   </div>
 
-  <script src="js/content.js?v=20260915-3"></script>
-  <script src="js/references.js?v=20260915-3"></script>
-  <script src="js/main.js?v=20260915-3"></script>
+  <script src="js/content.js?v=20260915-4"></script>
+  <script src="js/references.js?v=20260915-4"></script>
+  <script src="js/main.js?v=20260915-4"></script>
 </body>
 </html>
