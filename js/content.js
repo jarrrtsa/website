@@ -21,12 +21,6 @@ const content = {
     'services.repair.desc': 'Monipuoliset rakennus- ja korjaustyöt tarpeen mukaan.',
 
     'references.heading': 'Referenssit',
-    'references.caption.1': 'Kattomaalaus',
-    'references.caption.2': 'Kiinteistöhuolto',
-    'references.caption.3': 'Pihatyöt',
-    'references.caption.4': 'Korjaustyöt',
-    'references.caption.5': 'Uudisrakennus',
-    'references.caption.6': 'Remontti',
 
     'other.heading': 'Muut palvelut',
     'other.jetski': 'Vesijettivuokraus',
@@ -63,12 +57,6 @@ const content = {
     'services.repair.desc': 'Versatile construction and repair work as needed.',
 
     'references.heading': 'References',
-    'references.caption.1': 'Roof painting',
-    'references.caption.2': 'Property maintenance',
-    'references.caption.3': 'Outdoor work',
-    'references.caption.4': 'Repair work',
-    'references.caption.5': 'New construction',
-    'references.caption.6': 'Renovation',
 
     'other.heading': 'Other Services',
     'other.jetski': 'Jet ski rental',
@@ -105,12 +93,6 @@ const content = {
     'services.repair.desc': 'Mångsidiga bygg- och reparationsarbeten efter behov.',
 
     'references.heading': 'Referenser',
-    'references.caption.1': 'Takmålning',
-    'references.caption.2': 'Fastighetsservice',
-    'references.caption.3': 'Utomhusarbete',
-    'references.caption.4': 'Reparationsarbete',
-    'references.caption.5': 'Nybyggnation',
-    'references.caption.6': 'Renovering',
 
     'other.heading': 'Övriga tjänster',
     'other.jetski': 'Vattenskoteruthyrning',
