@@ -30,7 +30,6 @@ const content = {
 
     'other.heading': 'Muut palvelut',
     'other.jetski': 'Vesijettivuokraus',
-    'other.engine': 'Pienkoneiden huolto ja korjaus',
 
     'contact.heading': 'Yhteystiedot',
     'contact.phone.label': 'Puhelin',
@@ -73,7 +72,6 @@ const content = {
 
     'other.heading': 'Other Services',
     'other.jetski': 'Jet ski rental',
-    'other.engine': 'Small engine maintenance and repair',
 
     'contact.heading': 'Contact',
     'contact.phone.label': 'Phone',
@@ -116,7 +114,6 @@ const content = {
 
     'other.heading': 'Övriga tjänster',
     'other.jetski': 'Vattenskoteruthyrning',
-    'other.engine': 'Service och reparation av småmotorer',
 
     'contact.heading': 'Kontakt',
     'contact.phone.label': 'Telefon',
